@@ -26,13 +26,13 @@ data class HistoricalEntry(@Id val id: Long?, val entryDate: LocalDateTime, val 
 
 interface HistoricalEntryRepository : ReactiveCrudRepository<HistoricalEntry, Long> {
     @Query("SELECT * FROM historical_entry LIMIT :limit OFFSET :offset ")
-    fun findAll(limit: Int, offset: Int): Flow<HistoricalEntry>
+    suspend fun findAll(limit: Int, offset: Int): Flow<HistoricalEntry>
 }
 
 @RestController
 class HistoricalDataController(val historicalEntryRepository: HistoricalEntryRepository) {
     @GetMapping("/api/v1/historical-data")
-    fun getHistoricalData(@RequestParam limit: Int, @RequestParam offset: Int) = historicalEntryRepository.findAll(limit, offset)
+    suspend fun getHistoricalData(@RequestParam limit: Int, @RequestParam offset: Int) = historicalEntryRepository.findAll(limit, offset)
 }
 
 @Configuration

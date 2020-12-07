@@ -32,7 +32,7 @@ class ApiTest() {
 
 
     @Test
-    fun testGetHistoricalEntries() {
+    suspend fun testGetHistoricalEntries() {
 
         whenever(historicalEntryRepository.findAll(Mockito.anyInt(), Mockito.anyInt()))
                 .thenReturn(flowOf(HistoricalEntry(1, LocalDateTime.now(), "test", "val")))
